@@ -3,9 +3,28 @@
     "description": "Email verification step during setup of Government of Yukon online services account",
     "license": "Apache 2.0",
     "type": "project",
+    "repositories": [
+      {
+        "type": "package",
+        "package": {
+          "name": "ytgov/yukon-ca-design-system",
+          "version": "1.0.0",
+          "type": "laravel-library",
+          "source": {
+            "url": "http://app-cms-git01.gov.yk.ca/design/yukon.ca-design-system.git",
+            "type": "git",
+            "reference": "legible-css"
+          },
+          "require": {
+            "composer/installers": "~1.0"
+          }
+        }
+      }
+    ],
     "require": {
         "php": "^7.4|^8.0",
-        "laravel/lumen-framework": "^8.3.1"
+        "laravel/lumen-framework": "^8.3.1",
+        "ytgov/yukon-ca-design-system": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -27,6 +46,7 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
+        "secure-http": false,
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
@@ -35,5 +55,10 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
+    },
+    "extra": {
+        "installer-paths": {
+            "public/libraries/{$name}": ["ytgov/yukon-ca-design-system"]
+        }
     }
 }
