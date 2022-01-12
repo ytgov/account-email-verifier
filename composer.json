@@ -1,5 +1,5 @@
 {
-    "name": "account-email-verifier",
+    "name": "ytgov/account-email-verifier",
     "description": "Email verification step during setup of Government of Yukon online services account",
     "license": "Apache 2.0",
     "type": "project",
