@@ -56,21 +56,22 @@
 
                 <h1 class="mrgn-bttm-lg">Verify your email address</h1>
 
-                <div class="alert alert-warning">
+                <div class="alert alert-info">
                   <p>Your email address needs to be verified before you can continue.</p>
                 </div>
 
 
         <h2>Check your email</h2>
         
-        <p>We have sent an email message to {{ $email }}.</p>
+        <p>We have sent an email message to <code>{{ $email }}</code>.</p>
         
-        <p>Choose the Verify your email address button in that message. </p>
+        <p>Choose the <em>Verify your email address</em> button in that message. </p>
           
         <p>After you verify, you can close this browser window, or you can <a href="{{ $continueUrl }}">continue logging in</a>.</p>
 
+        <hr>
 
-        <h2>Didn't get an email?</h2>
+        <h4>Didn't get an email?</h4>
 
         <p>It can sometimes take a few minutes for a message to arrive. Check your Spam or Junk folder if you can't find it. </p>
         
@@ -79,11 +80,10 @@
         <form class="" action="resend" method="post">
           <input type="hidden" name="state" value="{{ $state }}">
           <input type="hidden" name="session_token" value="{{ $sessionToken }}">
-          <input type="submit" name="submit" class="btn btn-primary" value="Send a new verification email">
+          <input type="submit" name="submit" class="btn btn-default" value="Send a new verification email">
         </form>
-        
 
-        <h2>Get help with your account</h2>
+        <h4>Get help with your account</h4>
 
         <p>
           Use the <a href="#">account support service</a> to get help. We aim to respond to questions in 5 working days.
