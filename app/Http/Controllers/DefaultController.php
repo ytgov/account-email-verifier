@@ -61,6 +61,7 @@ class DefaultController extends Controller
           'continueUrl' => $continueUrl,
           'sessionToken' => $rawSessionToken,
           'state' => $state,
+          'resent' => $request->input('resent'),
         ]);
     }
     
@@ -82,6 +83,13 @@ class DefaultController extends Controller
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
         $this->auth0ResendMessage($sessionToken->user_id, $sessionToken->application_id);
+
+        // Redirect to the default page to show a confirmation message.
+        return redirect()->route('default', [
+          'state' => $state,
+          'session_token' => $rawSessionToken,
+          'resent' => time(),
+        ]);
     }
 
     private function continueLink($state)
@@ -191,11 +199,6 @@ class DefaultController extends Controller
       // Decode the JSON response into a PHP array:
       $response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
 
-      if (! empty($response)) {
-          // FIXME replace this with a redirect and confirmation message.
-          echo '<h2>createSendVerificationEmail response</h2>';
-
-          print_r($response);
-      }
+      return $response;
     }
 }

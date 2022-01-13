@@ -63,6 +63,14 @@
 
         <h2>Check your email</h2>
         
+        @if ($resent)
+          
+          <div class="alert alert-success">
+            <p>We’ve sent you a new message to verify your email address.</p>
+          </div>
+          
+        @endif
+
         <p>We have sent an email message to <code>{{ $email }}</code>.</p>
         
         <p>Choose the <em>Verify your email address</em> button in that message. </p>
@@ -70,6 +78,8 @@
         <p>After you verify, you can close this browser window, or you can <a href="{{ $continueUrl }}">continue logging in</a>.</p>
 
         <hr>
+
+      @if (!$resent)
 
         <h4>Didn't get an email?</h4>
 
@@ -82,6 +92,8 @@
           <input type="hidden" name="session_token" value="{{ $sessionToken }}">
           <input type="submit" name="submit" class="btn btn-default" value="Send a new verification email">
         </form>
+
+      @endif
 
         <h4>Get help with your account</h4>
 

@@ -13,5 +13,5 @@
 |
 */
 
-$router->get('/', 'DefaultController@show');
+$router->get('/', ['as' => 'default',  'uses' => 'DefaultController@show']);
 $router->post('/resend', 'DefaultController@resend');
