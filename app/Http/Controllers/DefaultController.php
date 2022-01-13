@@ -183,8 +183,7 @@ class DefaultController extends Controller
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
           'clientSecret' => env('AUTH0_CLIENT_SECRET'),
-          // FIXME don't hard-code audience.
-          'audience'     => ['https://dev-0tc6bn14.eu.auth0.com/api/v2/'],
+          'audience'     => [env('AUTH0_DOMAIN') . 'api/v2/'],
       ]);
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
