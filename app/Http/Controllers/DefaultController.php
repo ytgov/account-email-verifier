@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Log;
 
@@ -57,7 +59,7 @@ class DefaultController extends Controller
         $continueUrl = $this->continueLink($state);
 
         return view('default', [
-          'email' => $sessionToken->emailAddress,
+          'email' => $sessionToken->email,
           'continueUrl' => $continueUrl
         ]);
     }
@@ -98,13 +100,13 @@ class DefaultController extends Controller
      * @param string $sessionToken The raw JWT
      * @return return obj
      */
-    private function parseSessionToken($sessionToken)
+    private function parseSessionToken($rawJWT)
     {
-      // FIXME Replace this placeholder.
-      return (object) [
-        'applicationID' => '123456789',
-        'userID' => 'abcefghijklmnop',
-        'emailAddress' => 'franky@hollywood.com'
-      ];
+      $key = env('IDP_SESSION_TOKEN_SECRET', NULL);
+      // Auth0 encodes tokens using HS256
+      // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
+      $decoded = JWT::decode($rawJWT, new Key($key, 'HS256'));
+      // TODO Catch Firebase\JWT\ExpiredException and Firebase\JWT\SignatureInvalidException.
+      return $decoded;
     }
 }
