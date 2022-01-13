@@ -78,7 +78,7 @@ class DefaultController extends Controller
         $state = $request->input('state');
         $rawSessionToken = $request->input('session_token');
 
-        // validate token here. This one is in POST).
+        // Validate token here.
         $sessionToken = $this->parseSessionToken($rawSessionToken);
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
@@ -130,8 +130,6 @@ class DefaultController extends Controller
      */
     private function parseSessionToken($rawJWT)
     {
-      $key = env('AUTH0_SESSION_TOKEN_SECRET', NULL);
-      
       // From https://auth0.com/docs/quickstart/backend/php/
       // Trim whitespace from token string.
       $jwt = trim($rawJWT);
@@ -139,7 +137,6 @@ class DefaultController extends Controller
       // Attempt to decode the token:
       try {
           $token = $this->getSdk()->decode($jwt, null, null, null, null, null, null, \Auth0\SDK\Token::TYPE_TOKEN);
-          define('ENDPOINT_AUTHORIZED', true);
           return (object) $token->toArray();
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
           // The token wasn't valid. Let's display the error message from the Auth0 SDK.
@@ -177,7 +174,6 @@ class DefaultController extends Controller
      */
     private function auth0ResendMessage($userID, $applicationID)
     {
-      // $auth0 = $this->getSdk();
       $auth0 = new \Auth0\SDK\Auth0([
           'strategy'     => 'management',
           'domain'       => env('AUTH0_DOMAIN'),
@@ -187,12 +183,15 @@ class DefaultController extends Controller
       ]);
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
-      // If no AUTH0_MANAGEMENT_API_TOKEN is configured, this will automatically perform a client credentials exchange to generate one for you, so long as a client secret is configured.
+      // This will automatically perform a client credentials exchange to generate one for you, so long as a client secret is configured.
       $management = $auth0->management();
       
       // TODO check if user isn't already verified.
       
-      $response = $management->jobs()->createSendVerificationEmail($userID, ['client_id' => $applicationID]);
+      $response = $management->jobs()->createSendVerificationEmail(
+        $userID,
+        ['client_id' => $applicationID]
+      );
       
       // Does the status code of the response indicate failure?
       if ($response->getStatusCode() !== 201) {
@@ -203,6 +202,9 @@ class DefaultController extends Controller
       // Decode the JSON response into a PHP array:
       $response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
 
+      // This response is the job to send the email.
+      // Email sending could still fail.
+      // Should we follow up o the job to monitor it's success?
       return $response;
     }
 }
