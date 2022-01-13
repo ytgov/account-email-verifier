@@ -67,7 +67,7 @@
         
         <p>Choose the Verify your email address button in that message. </p>
           
-        <p>After you verify, you can close this browser window.</p>
+        <p>After you verify, you can close this browser window, or you can <a href="{{ $continueUrl }}">continue logging in</a>.</p>
 
 
         <h2>Didn't get an email?</h2>
