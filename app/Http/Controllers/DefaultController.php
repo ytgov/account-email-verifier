@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Log;
 
@@ -66,8 +64,8 @@ class DefaultController extends Controller
     
     private function continueLink($state)
     {
-      $idp_domain = env('IDP_DOMAIN', 'auth0.com');
-      return 'https://' . $idp_domain . '/continue?state=' . $state; 
+      $idp_domain = env('AUTH0_DOMAIN', 'auth0.com');
+      return $idp_domain . '/continue?state=' . $state; 
     }
 
     /**
@@ -102,11 +100,41 @@ class DefaultController extends Controller
      */
     private function parseSessionToken($rawJWT)
     {
-      $key = env('IDP_SESSION_TOKEN_SECRET', NULL);
-      // Auth0 encodes tokens using HS256
-      // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
-      $decoded = JWT::decode($rawJWT, new Key($key, 'HS256'));
-      // TODO Catch Firebase\JWT\ExpiredException and Firebase\JWT\SignatureInvalidException.
-      return $decoded;
+      $key = env('AUTH0_SESSION_TOKEN_SECRET', NULL);
+      
+      // From https://auth0.com/docs/quickstart/backend/php/
+      // Trim whitespace from token string.
+      $jwt = trim($rawJWT);
+
+      // Attempt to decode the token:
+      try {
+          $token = $this->getSdk()->decode($jwt, null, null, null, null, null, null, \Auth0\SDK\Token::TYPE_TOKEN);
+          define('ENDPOINT_AUTHORIZED', true);
+          return (object) $token->toArray();
+      } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
+          // The token wasn't valid. Let's display the error message from the Auth0 SDK.
+          // We'd probably want to show a custom error here for a real world application.
+          // TODO Fail better here.
+          abort(400, $exception->getMessage());
+      }
+    }
+    
+    private function getSdk()
+    {
+      // TODO this should be a service or something.
+      // Now instantiate the Auth0 class with our configuration:
+      $auth0 = new \Auth0\SDK\Auth0([
+          'strategy'     => 'webapp',
+          'domain'       => env('AUTH0_DOMAIN'),
+          'clientId'     => env('AUTH0_CLIENT_ID'),
+          // decode() uses client secret to validate the JWT signature.
+          'clientSecret' => env('AUTH0_SESSION_TOKEN_SECRET'),
+          // Not clear on what the real world audience will be.
+          'audience'     => ['test'],
+          // Auth0 encodes tokens using HS256 in Actions.
+          // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
+          'tokenAlgorithm' => 'HS256',
+      ]);
+      return $auth0;
     }
 }
