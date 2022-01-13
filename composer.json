@@ -13,7 +13,7 @@
           "source": {
             "url": "http://app-cms-git01.gov.yk.ca/design/yukon.ca-design-system.git",
             "type": "git",
-            "reference": "legible-css"
+            "reference": "de-duplication"
           },
           "require": {
             "composer/installers": "~1.0"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c37dab363a3b5dba7c513ec6f83269e9",
+    "content-hash": "89e69fd5b4078d89205b23e76164aaf4",
     "packages": [
         {
             "name": "brick/math",
@@ -5098,7 +5098,7 @@
             "source": {
                 "type": "git",
                 "url": "http://app-cms-git01.gov.yk.ca/design/yukon.ca-design-system.git",
-                "reference": "legible-css"
+                "reference": "de-duplication"
             },
             "require": {
                 "composer/installers": "~1.0"
