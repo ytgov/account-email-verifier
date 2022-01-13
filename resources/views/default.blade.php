@@ -56,7 +56,9 @@
 
                 <h1 class="mrgn-bttm-lg">Verify your email address</h1>
 
-        <p>Your email address needs to be verified before you can continue.</p>
+                <div class="alert alert-warning">
+                  <p>Your email address needs to be verified before you can continue.</p>
+                </div>
 
 
         <h2>Check your email</h2>
