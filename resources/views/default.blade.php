@@ -76,7 +76,11 @@
         
         <p>If you lost your verification email or want to request a new email, we can send another message.</p>
 
-        <button class="btn btn-primary">Send a new verification email</button>
+        <form class="" action="resend" method="post">
+          <input type="hidden" name="state" value="{{ $state }}">
+          <input type="hidden" name="session_token" value="{{ $sessionToken }}">
+          <input type="submit" name="submit" class="btn btn-primary" value="Send a new verification email">
+        </form>
         
 
         <h2>Get help with your account</h2>

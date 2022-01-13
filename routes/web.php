@@ -14,3 +14,4 @@
 */
 
 $router->get('/', 'DefaultController@show');
+$router->post('/resend', 'DefaultController@resend');
