@@ -170,6 +170,10 @@ class DefaultController extends Controller
     
     /**
      * Have Auth0 re-send the verification message.
+     *
+     * @param string $userID The ID of the user
+     * @param string $applicationID The ID of the application
+     * @return return array The result of the API call
      */
     private function auth0ResendMessage($userID, $applicationID)
     {
@@ -179,6 +183,7 @@ class DefaultController extends Controller
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
           'clientSecret' => env('AUTH0_CLIENT_SECRET'),
+          // FIXME don't hard-code audience.
           'audience'     => ['https://dev-0tc6bn14.eu.auth0.com/api/v2/'],
       ]);
 
