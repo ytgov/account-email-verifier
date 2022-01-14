@@ -36,12 +36,19 @@ class JwtMiddleware
 
       try {
         // Verify the token: (This will throw an \Auth0\SDK\Exception\InvalidTokenException if verification fails.)
+        // Auth0 encodes tokens using HS256 in Actions.
+        // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
         $token->verify('HS256', NULL, env('AUTH0_SESSION_TOKEN_SECRET'));
 
         // Validate the token claims: (This will throw an \Auth0\SDK\Exception\InvalidTokenException if validation fails.)
+        //
         // Need the pass in a version of the domain without the leading "https://
         // or trailing slash, otherwise, get this validation error:
         // > Issuer (iss) claim mismatch in the token; expected "https://YOUR-DOMAIM/", found "YOUR-DOMAIM"
+        //
+        // If you get:
+        // > Audience (aud) claim must be a string or array of strings present in the token
+        // Make sure the redirect token has an `aud` value.
         $token->validate(env('AUTH0_DOMAIN'));
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // The token wasn't valid. Let's display the error message from the Auth0 SDK.
@@ -64,13 +71,10 @@ class JwtMiddleware
           'strategy'     => 'webapp',
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
-          // Not clear on what the real world audience will be.
-          'audience'     => ['test', 'https://validate-your-email.sign-on.service.yukon.ca/'],
-          // Auth0 encodes tokens using HS256 in Actions.
-          // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
-          'tokenAlgorithm' => 'HS256',
           // $token->verify uses the session token secret to validate the JWT signature.
           // 'clientSecret' => env('AUTH0_CLIENT_SECRET'),
+          // If you don't define audience, the SDK will use the client ID.
+          // 'audience'     => ['https://validate-your-email.sign-on.service.yukon.ca/'],
       ]);
       return $auth0;
     }
