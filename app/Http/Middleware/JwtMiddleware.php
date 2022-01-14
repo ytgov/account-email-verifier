@@ -61,7 +61,7 @@ class JwtMiddleware
         // We'd probably want to show a custom error here for a real world application.
         // if token is not valid, this is a configuration error or a security issue.
         // if token has  expired, User should go back to Auth0?
-        Log::error('Token invalid', ['token' => $token, 'exception' => $exception->getMessage()]);
+        Log::error('Token invalid', ['exception' => $exception->getMessage()]);
         abort(400, 'Invalid token.');
       }
       
