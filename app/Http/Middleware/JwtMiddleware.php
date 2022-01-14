@@ -39,7 +39,10 @@ class JwtMiddleware
         $token->verify('HS256', NULL, env('AUTH0_SESSION_TOKEN_SECRET'));
 
         // Validate the token claims: (This will throw an \Auth0\SDK\Exception\InvalidTokenException if validation fails.)
-        $token->validate();
+        // Need the pass in a version of the domain without the leading "https://
+        // or trailing slash, otherwise, get this validation error:
+        // > Issuer (iss) claim mismatch in the token; expected "https://YOUR-DOMAIM/", found "YOUR-DOMAIM"
+        $token->validate(env('AUTH0_DOMAIN'));
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // The token wasn't valid. Let's display the error message from the Auth0 SDK.
         // We'd probably want to show a custom error here for a real world application.

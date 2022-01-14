@@ -77,7 +77,7 @@ class DefaultController extends BaseController
     private function continueLink($state)
     {
       $idp_domain = env('AUTH0_DOMAIN', 'auth0.com');
-      return $idp_domain . '/continue?state=' . $state; 
+      return 'https://' . $idp_domain . '/continue?state=' . $state; 
     }
     
     /**
@@ -94,7 +94,7 @@ class DefaultController extends BaseController
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
           'clientSecret' => env('AUTH0_CLIENT_SECRET'),
-          'audience'     => [env('AUTH0_DOMAIN') . 'api/v2/'],
+          'audience'     => ['https://' . env('AUTH0_DOMAIN') . 'api/v2/'],
       ]);
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
