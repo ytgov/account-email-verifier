@@ -27,16 +27,8 @@ class DefaultController extends BaseController
     public function show(Request $request)
     {
         $state = $request->input('state');
-        $rawSessionToken = $request->input('session_token');
         if (empty($state)) {
-          // TODO Improve the response to the user here.
           Log::error('State is missing');
-          abort(400, "Required information is missing.");
-        }
-
-        if (empty($rawSessionToken)) {
-          // TODO Improve the response to the user here.
-          Log::error('Session token is missing');
           abort(400, "Required information is missing.");
         }
 
@@ -47,7 +39,7 @@ class DefaultController extends BaseController
         return view('default', [
           'email' => $sessionToken['email'],
           'continueUrl' => $continueUrl,
-          'sessionToken' => $rawSessionToken,
+          'sessionToken' => $request->input('session_token'),
           'state' => $state,
           'resent' => $request->input('resent'),
         ]);

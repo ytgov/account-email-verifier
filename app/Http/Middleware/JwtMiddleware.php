@@ -19,6 +19,10 @@ class JwtMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if (empty($request->input('session_token'))) {
+          Log::error('Session token is missing');
+          abort(400, "Required information is missing.");
+        }
         $token = $this->parseSessionToken($request->input('session_token'));
         $request->session_token = $token->toArray();
         return $next($request);
@@ -51,14 +55,14 @@ class JwtMiddleware
         // > Audience (aud) claim must be a string or array of strings present in the token
         // Make sure the redirect token has an `aud` value.
         $token->validate(env('AUTH0_DOMAIN'));
+        // TODO is there a way to capture expired tokens specifically?
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // The token wasn't valid. Let's display the error message from the Auth0 SDK.
         // We'd probably want to show a custom error here for a real world application.
         // if token is not valid, this is a configuration error or a security issue.
         // if token has  expired, User should go back to Auth0?
         Log::error('Token invalid', ['token' => $token, 'exception' => $exception->getMessage()]);
-        // TODO Fail better here.
-        abort(400, $exception->getMessage());
+        abort(400, 'Invalid token.');
       }
       
       return $token;
