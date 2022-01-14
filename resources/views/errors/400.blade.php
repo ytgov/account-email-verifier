@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="robots" content="noindex,nofollow,noarchive" />
-    <title>An Error Occurred: Bad request</title>
-</head>
-<body>
-<div class="container">
-    <h1>Oops! An Error Occurred!</h1>
+<x-layout>
+
+    <div class="alert alert-danger">
+      <p>An error occurred!</p>
+    </div>
+    
     <h2>The server returned a "Bad request".</h2>
 
     <p>
@@ -16,6 +13,4 @@
     
     @include('shared.get_help')
 
-</div>
-</body>
-</html>
+</x-layout>
