@@ -64,13 +64,13 @@ class JwtMiddleware
           'strategy'     => 'webapp',
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
-          // decode() uses client secret to validate the JWT signature.
-          'clientSecret' => env('AUTH0_SESSION_TOKEN_SECRET'),
           // Not clear on what the real world audience will be.
           'audience'     => ['test', 'https://validate-your-email.sign-on.service.yukon.ca/'],
           // Auth0 encodes tokens using HS256 in Actions.
           // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
           'tokenAlgorithm' => 'HS256',
+          // $token->verify uses the session token secret to validate the JWT signature.
+          // 'clientSecret' => env('AUTH0_CLIENT_SECRET'),
       ]);
       return $auth0;
     }
