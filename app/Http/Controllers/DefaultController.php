@@ -62,20 +62,15 @@ class DefaultController extends Controller
      */
     public function resend(Request $request)
     {
-        $state = $request->input('state');
-        $rawSessionToken = $request->input('session_token');
-
         $sessionToken = $request->session_token;
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
         $this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
 
         // Redirect to the default page to show a confirmation message.
-        return redirect()->route('default', [
-          'state' => $state,
-          'session_token' => $rawSessionToken,
-          'resent' => time(),
-        ]);
+        return redirect()->route('default',
+          array_merge($request->all(), ['resent' => time()])
+        );
     }
 
     private function continueLink($state)
