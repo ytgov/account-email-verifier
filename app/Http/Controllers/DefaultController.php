@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\Controller as BaseController;
 use Log;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * Create a new controller instance.
