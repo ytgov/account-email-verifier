@@ -51,6 +51,9 @@ class Handler extends ExceptionHandler
      */
      public function render($request, Throwable $e)
      {
+         if (env('APP_DEBUG')) {
+            return parent::render($request, $e);
+         }
          if ($e instanceof HttpException) {
              $status = $e->getStatusCode();
 
@@ -59,10 +62,6 @@ class Handler extends ExceptionHandler
              }
          }
 
-         if (env('APP_DEBUG')) {
-             return parent::render($request, $e);
-         } else {
-             return response(view("errors.500"), 500);
-         }
+         return response(view("errors.500"), 500);
      }
 }
