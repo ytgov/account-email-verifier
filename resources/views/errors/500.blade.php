@@ -13,6 +13,9 @@
         Something is broken. Please let us know what you were doing when this error occurred.
         We will fix it as soon as possible. Sorry for any inconvenience caused.
     </p>
+
+    @include('shared.get_help')
+
 </div>
 </body>
 </html>
