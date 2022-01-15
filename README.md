@@ -2,12 +2,12 @@
 
 Email verification step during setup of Government of Yukon online services account.
 
-Built using the Lumen PHP Framework. Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Built using the Lumen PHP Framework and the [Auth0 PHP SDK](https://github.com/auth0/Auth0-PHP). Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
 
 ## High level overview
 
 1. A user creates an account, or logs in at Auth0.
-2. An Action or Rule in Auth0 redirects any user who does not have a verified email address to this application.
+2. An Action or Rule in Auth0 redirects the user who does not have a verified email address to this application.
 3. This application explains the verification requirement and allows the user to optionally send another verification message.
 4. Once email address is verified, the user can resume their log in process.
 
@@ -27,9 +27,9 @@ Inside the `session_token`, the following values are expected:
 
 Either a Rule or an Action is required to redirect users who have not verified their email address to this application.
 
-An sample Action is included, see `postlogin-action-enforce-email-verification.js`.
+An sample Post-Login Action is included, see `postlogin-action-enforce-email-verification.js`.
 
-The `session_token` value is signed with a shared secret. Both Auth0 and this application need to know the secret. 
+The `session_token` value is signed with a shared secret. Both Auth0 and this application need to know the secret.
 
 ### Setup Account email verifier as an Auth0 application
 
@@ -52,4 +52,13 @@ The `client_id` here is the Account email verifier application client ID, not th
 
 ## Configuration
 
-Edit your `.env`.
+- Copy `.env.example` to `.env`
+- Edit your `.env`.
+
+## Requirements
+
+- PHP 8
+- Composer
+- [Lumen requirements](https://lumen.laravel.com/docs/8.x/installation#server-requirements)
+  - OpenSSL PHP Extension
+  - Mbstring PHP Extension
