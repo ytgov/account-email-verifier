@@ -54,7 +54,7 @@ function enforceEmailVerification(event, api) {
     // Craft a signed session token
     const token = api.redirect.encodeToken({
       secret: event.secrets.SESSION_TOKEN_SECRET,
-      expiresInSeconds: 60,
+      expiresInSeconds: 900,
       payload: {
         // Custom claims to be added to the token
         email: event.user.email,
