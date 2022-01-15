@@ -37,9 +37,10 @@ class JwtMiddleware
     private function parseSessionToken($rawJWT)
     {
       $auth0 = $this->getSdk();
-      $token = new \Auth0\SDK\Token($auth0->configuration(), $rawJWT, \Auth0\SDK\Token::TYPE_ID_TOKEN);
 
       try {
+        $token = new \Auth0\SDK\Token($auth0->configuration(), $rawJWT, \Auth0\SDK\Token::TYPE_ID_TOKEN);
+
         // Verify the token: (This will throw an \Auth0\SDK\Exception\InvalidTokenException if verification fails.)
         // Auth0 encodes tokens using HS256 in Actions.
         // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
