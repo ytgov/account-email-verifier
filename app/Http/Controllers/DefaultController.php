@@ -28,7 +28,7 @@ class DefaultController extends BaseController
     {
         $state = $request->input('state');
         if (empty($state)) {
-          Log::error('State is missing');
+          Log::info('State is missing');
           return redirect()->route('missing_info');
         }
 
