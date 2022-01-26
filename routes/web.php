@@ -22,7 +22,7 @@ $router->post('/', [
   'uses'       => 'DefaultController@resend',
   'middleware' => ['jwt']
 ]);
-$router->get('/explainer', [
+$router->get('/about', [
   'as'         => 'missing_info',  
   'uses'       => 'DefaultController@missing_info',
 ]);
