@@ -124,7 +124,7 @@ class DefaultController extends BaseController
       
       // Does the status code of the response indicate failure?
       if ($response->getStatusCode() !== 201) {
-          Log::error('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
+          Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
           abort(500, "API request failed.");
       }
 

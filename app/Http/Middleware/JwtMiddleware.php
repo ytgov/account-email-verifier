@@ -66,7 +66,7 @@ class JwtMiddleware
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // if token has  expired, User should go back to Auth0?
         // TODO show an error message here with instructions to the user.
-        Log::error('Token failed expiration', ['exception' => $exception->getMessage()]);
+        Log::notice('Token failed expiration', ['exception' => $exception->getMessage()]);
         abort(400, 'Session expired.');
       }
 
