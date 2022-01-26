@@ -72,8 +72,7 @@ class JwtMiddleware
     private function getSdk()
     {
       // TODO this should be a service or something.
-      // Now instantiate the Auth0 class with our configuration:
-      $auth0 = new \Auth0\SDK\Auth0([
+      $config = [
           'strategy'     => 'webapp',
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
@@ -81,7 +80,14 @@ class JwtMiddleware
           // 'clientSecret' => env('AUTH0_CLIENT_SECRET'),
           // If you don't define audience, the SDK will use the client ID.
           // 'audience'     => ['https://validate-your-email.sign-on.service.yukon.ca/'],
-      ]);
+      ];
+      // In case we're using a custom domain, tell Auth0 about it.
+      if (env('AUTH0_CUSTOM_DOMAIN')) {
+        $config['customDomain'] = env('AUTH0_CUSTOM_DOMAIN');
+      }
+      // Now instantiate the Auth0 class with our configuration:
+      $auth0 = new \Auth0\SDK\Auth0($config);
+
       return $auth0;
     }
 

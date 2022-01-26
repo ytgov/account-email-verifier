@@ -81,13 +81,21 @@ class DefaultController extends BaseController
      */
     private function auth0ResendMessage($userID, $applicationID)
     {
-      $auth0 = new \Auth0\SDK\Auth0([
+      $config = [
           'strategy'     => 'management',
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
           'clientSecret' => env('AUTH0_CLIENT_SECRET'),
+          // The audience for the API will always be the auth0 domain, not the
+          // custom domain.
+          // @see https://auth0.com/docs/customize/custom-domains/configure-features-to-use-custom-domains#apis
           'audience'     => ['https://' . env('AUTH0_DOMAIN') . 'api/v2/'],
-      ]);
+      ];
+      // In case we're using a custom domain, tell Auth0 about it.
+      if (env('AUTH0_CUSTOM_DOMAIN')) {
+        $config['customDomain'] = env('AUTH0_CUSTOM_DOMAIN');
+      }
+      $auth0 = new \Auth0\SDK\Auth0($config);
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
       // This will automatically perform a client credentials exchange to generate one for you, so long as a client secret is configured.
