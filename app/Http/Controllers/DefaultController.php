@@ -29,7 +29,7 @@ class DefaultController extends BaseController
         $state = $request->input('state');
         if (empty($state)) {
           Log::error('State is missing');
-          abort(400, "Required information is missing.");
+          return redirect()->route('missing_info');
         }
 
         $sessionToken = $request->session_token;
@@ -64,6 +64,20 @@ class DefaultController extends BaseController
         return redirect()->route('default',
           array_merge($request->all(), ['resent' => time()])
         );
+    }
+    
+    /**
+     * Explain what this site is.
+     *
+     * This is to fail gracefully when someone who shows up without the required
+     * information in the request.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function missing_info(Request $request)
+    {
+      return view('missing_info');
     }
 
     private function continueLink($state)

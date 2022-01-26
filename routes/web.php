@@ -13,5 +13,16 @@
 |
 */
 
-$router->get('/', ['as' => 'default',  'uses' => 'DefaultController@show']);
-$router->post('/', 'DefaultController@resend');
+$router->get('/', [
+  'as'         => 'default',
+  'uses'       => 'DefaultController@show',
+  'middleware' => ['jwt']
+]);
+$router->post('/', [
+  'uses'       => 'DefaultController@resend',
+  'middleware' => ['jwt']
+]);
+$router->get('/explainer', [
+  'as'         => 'missing_info',  
+  'uses'       => 'DefaultController@missing_info',
+]);

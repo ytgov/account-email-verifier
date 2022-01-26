@@ -21,7 +21,7 @@ class JwtMiddleware
     {
         if (empty($request->input('session_token'))) {
           Log::error('Session token is missing');
-          abort(400, "Required information is missing.");
+          return redirect()->route('missing_info');
         }
         $token = $this->parseSessionToken($request->input('session_token'));
         $request->session_token = $token->toArray();
