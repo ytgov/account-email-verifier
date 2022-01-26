@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Log;
+use Auth0\SDK\Token\Parser;
 
 class JwtMiddleware
 {
@@ -31,6 +32,9 @@ class JwtMiddleware
     /**
      * Return information from the JWT.
      *
+     * Verifies the signature of the token and also it's expiry, issuer and
+     * audience.
+     *
      * @param string $rawJWT The raw JWT
      * @return return \Auth0\SDK\Token
      */
@@ -45,7 +49,28 @@ class JwtMiddleware
         // Auth0 encodes tokens using HS256 in Actions.
         // See https://auth0.com/docs/customize/actions/triggers/post-login/redirect-with-actions#pass-data-to-the-external-site
         $token->verify('HS256', NULL, env('AUTH0_SESSION_TOKEN_SECRET'));
+      } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
+        // The token signature is not valid.
+        // This is a configuration error or a security issue.
+        Log::error('Token failed to verify', ['exception' => $exception->getMessage()]);
+        abort(400, 'Invalid token.');
+      }
+      
+      // Capture expired tokens seperate of other validation errors.
+      try {
+        $parser = new Parser($rawJWT, $auth0->configuration());
+        $validator = $parser->validate();
 
+        $validator->expiration(60, time());
+
+      } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
+        // if token has  expired, User should go back to Auth0?
+        // TODO show an error message here with instructions to the user.
+        Log::error('Token failed expiration', ['exception' => $exception->getMessage()]);
+        abort(400, 'Session expired.');
+      }
+
+      try {
         // Validate the token claims: (This will throw an \Auth0\SDK\Exception\InvalidTokenException if validation fails.)
         //
         // Need the pass in a version of the domain without the leading "https://
@@ -61,7 +86,6 @@ class JwtMiddleware
         // The token wasn't valid. Let's display the error message from the Auth0 SDK.
         // We'd probably want to show a custom error here for a real world application.
         // if token is not valid, this is a configuration error or a security issue.
-        // if token has  expired, User should go back to Auth0?
         Log::error('Token invalid', ['exception' => $exception->getMessage()]);
         abort(400, 'Invalid token.');
       }
