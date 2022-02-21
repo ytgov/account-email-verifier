@@ -28,8 +28,8 @@ class DefaultController extends BaseController
     {
         $state = $request->input('state');
         if (empty($state)) {
-          Log::error('State is missing');
-          abort(400, "Required information is missing.");
+          Log::info('State is missing');
+          return redirect()->route('missing_info');
         }
 
         $sessionToken = $request->session_token;
@@ -65,6 +65,20 @@ class DefaultController extends BaseController
           array_merge($request->all(), ['resent' => time()])
         );
     }
+    
+    /**
+     * Explain what this site is.
+     *
+     * This is to fail gracefully when someone who shows up without the required
+     * information in the request.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function missing_info(Request $request)
+    {
+      return view('missing_info');
+    }
 
     private function continueLink($state)
     {
@@ -81,13 +95,21 @@ class DefaultController extends BaseController
      */
     private function auth0ResendMessage($userID, $applicationID)
     {
-      $auth0 = new \Auth0\SDK\Auth0([
+      $config = [
           'strategy'     => 'management',
           'domain'       => env('AUTH0_DOMAIN'),
           'clientId'     => env('AUTH0_CLIENT_ID'),
           'clientSecret' => env('AUTH0_CLIENT_SECRET'),
+          // The audience for the API will always be the auth0 domain, not the
+          // custom domain.
+          // @see https://auth0.com/docs/customize/custom-domains/configure-features-to-use-custom-domains#apis
           'audience'     => ['https://' . env('AUTH0_DOMAIN') . 'api/v2/'],
-      ]);
+      ];
+      // In case we're using a custom domain, tell Auth0 about it.
+      if (env('AUTH0_CUSTOM_DOMAIN')) {
+        $config['customDomain'] = env('AUTH0_CUSTOM_DOMAIN');
+      }
+      $auth0 = new \Auth0\SDK\Auth0($config);
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
       // This will automatically perform a client credentials exchange to generate one for you, so long as a client secret is configured.
@@ -102,7 +124,7 @@ class DefaultController extends BaseController
       
       // Does the status code of the response indicate failure?
       if ($response->getStatusCode() !== 201) {
-          Log::error('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
+          Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
           abort(500, "API request failed.");
       }
 
