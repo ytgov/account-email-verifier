@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "auth0/auth0-php",
-            "version": "8.1.0",
+            "version": "8.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auth0/auth0-PHP.git",
-                "reference": "1ea5be4bb57267eeccb2ec6384c295b9ead24e45"
+                "reference": "610873fcc14c03b92b1e71c167aeb2428919c904"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/1ea5be4bb57267eeccb2ec6384c295b9ead24e45",
-                "reference": "1ea5be4bb57267eeccb2ec6384c295b9ead24e45",
+                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/610873fcc14c03b92b1e71c167aeb2428919c904",
+                "reference": "610873fcc14c03b92b1e71c167aeb2428919c904",
                 "shasum": ""
             },
             "require": {
@@ -37,14 +37,13 @@
             },
             "require-dev": {
                 "ergebnis/phpstan-rules": "^0.15",
-                "firebase/php-jwt": "^5.0",
+                "firebase/php-jwt": "^6.0",
                 "hyperf/event": "^2.2",
-                "infection/infection": "^0.23",
                 "mockery/mockery": "^1.4",
                 "nunomaduro/phpinsights": "^2.0",
                 "nyholm/psr7": "^1.4",
                 "pestphp/pest": "^1.18",
-                "pestphp/pest-plugin-parallel": "^0.2",
+                "pestphp/pest-plugin-parallel": "^0.2 || ^1.0",
                 "php-http/mock-client": "^1.4",
                 "phpstan/phpstan": "^0.12",
                 "phpstan/phpstan-strict-rules": "^0.12",
@@ -89,9 +88,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auth0/auth0-PHP/issues",
-                "source": "https://github.com/auth0/auth0-PHP/tree/8.1.0"
+                "source": "https://github.com/auth0/auth0-PHP/tree/8.2.0"
             },
-            "time": "2022-02-17T18:45:43+00:00"
+            "time": "2022-04-26T13:11:00+00:00"
         },
         {
             "name": "brick/math",
@@ -8231,5 +8230,5 @@
         "php": "^7.4|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
