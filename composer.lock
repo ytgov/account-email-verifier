@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "auth0/auth0-php",
-            "version": "8.2.1",
+            "version": "8.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auth0/auth0-PHP.git",
-                "reference": "c6a628f9e3ce30c225ce42ae208ccc32f529f25c"
+                "reference": "c97edba1d0584dfc7fdb2b22280394d350870ca3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/c6a628f9e3ce30c225ce42ae208ccc32f529f25c",
-                "reference": "c6a628f9e3ce30c225ce42ae208ccc32f529f25c",
+                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/c97edba1d0584dfc7fdb2b22280394d350870ca3",
+                "reference": "c97edba1d0584dfc7fdb2b22280394d350870ca3",
                 "shasum": ""
             },
             "require": {
@@ -25,7 +25,7 @@
                 "ext-json": "*",
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "php": "^7.4 || ^8.0",
+                "php": "^8.0",
                 "php-http/discovery": "^1.0",
                 "php-http/httplug": "^2.2",
                 "php-http/multipart-stream-builder": "^1.1",
@@ -36,20 +36,20 @@
                 "psr/http-message-implementation": "^1.0"
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.25",
-                "firebase/php-jwt": "^6.0",
+                "firebase/php-jwt": "^6.3",
                 "hyperf/event": "^2.2",
-                "mockery/mockery": "^1.4",
-                "nunomaduro/phpinsights": "^2.0",
-                "nyholm/psr7": "^1.4",
+                "laravel/pint": "^1.2",
+                "mockery/mockery": "^1.5",
+                "nyholm/psr7": "^1.5",
                 "pestphp/pest": "^1.21",
-                "php-http/mock-client": "^1.4",
-                "phpstan/phpstan": "^1.6",
-                "phpstan/phpstan-strict-rules": "^1.1",
+                "php-http/mock-client": "^1.5",
+                "phpstan/phpstan": "^1.9",
+                "phpstan/phpstan-strict-rules": "^1.4.4",
                 "phpunit/phpunit": "^9.5",
-                "rector/rector": "^0.12.23",
-                "symfony/cache": "^4.4 || ^5.2 || ^6.0",
-                "vimeo/psalm": "^4.10",
+                "rector/rector": "^0.14.7",
+                "squizlabs/php_codesniffer": "^3.7",
+                "symfony/cache": "^4.4 || ^5.4 || ^6.1",
+                "vimeo/psalm": "^4.30",
                 "wikimedia/composer-merge-plugin": "^2.0"
             },
             "type": "library",
@@ -89,9 +89,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auth0/auth0-PHP/issues",
-                "source": "https://github.com/auth0/auth0-PHP/tree/8.2.1"
+                "source": "https://github.com/auth0/auth0-PHP/tree/8.3.7"
             },
-            "time": "2022-06-07T14:13:17+00:00"
+            "time": "2022-11-08T02:26:35+00:00"
         },
         {
             "name": "brick/math",
@@ -2898,16 +2898,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.14.2",
+            "version": "1.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "c8d48852fbc052454af42f6de27635ddd916b959"
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/c8d48852fbc052454af42f6de27635ddd916b959",
-                "reference": "c8d48852fbc052454af42f6de27635ddd916b959",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/31d8ee46d0215108df16a8527c7438e96a4d7735",
+                "reference": "31d8ee46d0215108df16a8527c7438e96a4d7735",
                 "shasum": ""
             },
             "require": {
@@ -2959,9 +2959,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.14.2"
+                "source": "https://github.com/php-http/discovery/tree/1.14.3"
             },
-            "time": "2022-05-25T07:26:05+00:00"
+            "time": "2022-07-11T14:04:40+00:00"
         },
         {
             "name": "php-http/httplug",
