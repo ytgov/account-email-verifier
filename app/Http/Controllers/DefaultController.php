@@ -19,6 +19,37 @@ class DefaultController extends BaseController
     }
 
     /**
+     * Handle the default entry path.
+     *
+     * TODO This checks to see if the user has had a verfication email sent already. If not
+     * a verification email is set.
+     *
+     * Redirects to the show action.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function start(Request $request)
+    {
+        $state = $request->input('state');
+        if (empty($state)) {
+          Log::info('State is missing');
+          return redirect()->route('missing_info');
+        }
+
+        $sessionToken = $request->session_token;
+        // gold plating: check if the user is already verified.
+        // Have Auth0 re-send the verification message.
+        //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        $this->sendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+
+        // Redirect to the default page to show a confirmation message.
+        return redirect()->route('default',
+          array_merge($request->all(), ['sent' => time()])
+        );
+    }
+
+    /**
      * Show the default page.
      *
      * @param  Request  $request
@@ -44,7 +75,7 @@ class DefaultController extends BaseController
           'resent' => $request->input('resent'),
         ]);
     }
-    
+
     /**
      * Resend the email address verification message.
      *
@@ -58,14 +89,15 @@ class DefaultController extends BaseController
         $sessionToken = $request->session_token;
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
-        $this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        $this->sendMessage($sessionToken['user_id'], $sessionToken['application_id']);
 
         // Redirect to the default page to show a confirmation message.
         return redirect()->route('default',
           array_merge($request->all(), ['resent' => time()])
         );
     }
-    
+
     /**
      * Explain what this site is.
      *
@@ -83,9 +115,42 @@ class DefaultController extends BaseController
     private function continueLink($state)
     {
       $idp_domain = env('AUTH0_DOMAIN', 'auth0.com');
-      return 'https://' . $idp_domain . '/continue?state=' . $state; 
+      return 'https://' . $idp_domain . '/continue?state=' . $state;
     }
-    
+
+
+    /**
+     * (Re)send the verification message, after getting a ticket from Auth0.
+     *
+     * @param string $userID The ID of the user
+     * @param string $applicationID The ID of the application
+     * @return TBD
+     */
+    private function sendMessage($userID, $applicationID)
+    {
+      $management = $this->getAuth0ManagementAPI();
+
+      // TODO check if user isn't already verified.
+      $response = $management->tickets()->createEmailVerification(
+        $userID,
+        ['client_id' => $applicationID]
+      );
+
+      // Does the status code of the response indicate failure?
+      if ($response->getStatusCode() !== 201) {
+        Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
+        abort(500, "API request failed.");
+      }
+
+      // Decode the JSON response into a PHP array:
+      $ticket_response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+      if (empty($ticket_response['ticket'])) {
+        Log::critical('Response missing ticket URL', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
+        abort(500, "API request failed.");
+      }
+      Log::critical('ticket URL', ['response' => $response->getBody()]);
+    }
+
     /**
      * Have Auth0 re-send the verification message.
      *
@@ -94,6 +159,36 @@ class DefaultController extends BaseController
      * @return return array The result of the API call
      */
     private function auth0ResendMessage($userID, $applicationID)
+    {
+      $management = $this->getAuth0ManagementAPI();
+      // TODO check if user isn't already verified.
+
+      $response = $management->jobs()->createSendVerificationEmail(
+        $userID,
+        ['client_id' => $applicationID]
+      );
+
+      // Does the status code of the response indicate failure?
+      if ($response->getStatusCode() !== 201) {
+          Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
+          abort(500, "API request failed.");
+      }
+
+      // Decode the JSON response into a PHP array:
+      $response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
+
+      // This response is the job to send the email.
+      // Email sending could still fail.
+      // Should we follow up o the job to monitor it's success?
+      return $response;
+    }
+
+    /**
+     * Get an Auth0 SDK Management API.
+     *
+     * @return Auth0\SDK\API\Management
+     */
+    private function getAuth0ManagementAPI()
     {
       $config = [
           'strategy'     => 'management',
@@ -113,27 +208,6 @@ class DefaultController extends BaseController
 
       // Create a configured instance of the `Auth0\SDK\API\Management` class, based on the configuration we setup the SDK ($auth0) using.
       // This will automatically perform a client credentials exchange to generate one for you, so long as a client secret is configured.
-      $management = $auth0->management();
-      
-      // TODO check if user isn't already verified.
-      
-      $response = $management->jobs()->createSendVerificationEmail(
-        $userID,
-        ['client_id' => $applicationID]
-      );
-      
-      // Does the status code of the response indicate failure?
-      if ($response->getStatusCode() !== 201) {
-          Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
-          abort(500, "API request failed.");
-      }
-
-      // Decode the JSON response into a PHP array:
-      $response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
-
-      // This response is the job to send the email.
-      // Email sending could still fail.
-      // Should we follow up o the job to monitor it's success?
-      return $response;
+      return $auth0->management();
     }
 }

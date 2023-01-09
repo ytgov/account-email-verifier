@@ -13,6 +13,11 @@
 |
 */
 
+$router->get('/start', [
+  'as'         => 'default',
+  'uses'       => 'DefaultController@start',
+  'middleware' => ['jwt']
+]);
 $router->get('/', [
   'as'         => 'default',
   'uses'       => 'DefaultController@show',

@@ -49,7 +49,10 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "secure-http": false,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
