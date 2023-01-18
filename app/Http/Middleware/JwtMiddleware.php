@@ -58,7 +58,9 @@ class JwtMiddleware
       
       // Capture expired tokens seperate of other validation errors.
       try {
-        $parser = new Parser($rawJWT, $auth0->configuration());
+        // The argument order here changed at in 8.3.8 (commit b30bdcb7f10).
+        $parser = new Parser($auth0->configuration(), $rawJWT);
+
         $validator = $parser->validate();
 
         $validator->expiration(60, time());
