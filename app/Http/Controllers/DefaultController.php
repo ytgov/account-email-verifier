@@ -38,6 +38,17 @@ class DefaultController extends BaseController
         }
 
         $sessionToken = $request->session_token;
+
+        if (empty($sessionToken['user_id'])) {
+          Log::info('user_id is missing from session token.');
+          return redirect()->route('missing_info');
+        }
+
+        if (empty($sessionToken['application_id'])) {
+          Log::info('application_id is missing from session token.');
+          return redirect()->route('missing_info');
+        }
+
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
         //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
