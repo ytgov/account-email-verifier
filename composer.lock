@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "auth0/auth0-php",
-            "version": "8.3.8",
+            "version": "8.4.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/auth0/auth0-PHP.git",
-                "reference": "cb15b21273b516bcb76aee4f9ee652f9fe3c3968"
+                "url": "git@github.com:auth0/Auth0-PHP.git",
+                "reference": "57642895f8b7dc6ef9dd5ddee2fc047dfcf7fdcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/cb15b21273b516bcb76aee4f9ee652f9fe3c3968",
-                "reference": "cb15b21273b516bcb76aee4f9ee652f9fe3c3968",
+                "url": "https://api.github.com/repos/auth0/Auth0-PHP/zipball/57642895f8b7dc6ef9dd5ddee2fc047dfcf7fdcb",
+                "reference": "57642895f8b7dc6ef9dd5ddee2fc047dfcf7fdcb",
                 "shasum": ""
             },
             "require": {
@@ -88,11 +88,7 @@
                 "protect",
                 "secure"
             ],
-            "support": {
-                "issues": "https://github.com/auth0/auth0-PHP/issues",
-                "source": "https://github.com/auth0/auth0-PHP/tree/8.3.8"
-            },
-            "time": "2022-12-02T07:16:25+00:00"
+            "time": "2023-01-24T16:32:32+00:00"
         },
         {
             "name": "brick/math",
