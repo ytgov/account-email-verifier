@@ -25,6 +25,7 @@
         "php": "^7.4|^8.0",
         "auth0/auth0-php": "^8.0",
         "guzzlehttp/guzzle": "^7.4",
+        "illuminate/mail": "^8.83",
         "laravel/lumen-framework": "^8.3.1",
         "ytgov/yukon-ca-design-system": "^1.0"
     },
