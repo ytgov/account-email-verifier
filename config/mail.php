@@ -100,8 +100,12 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'eServices@yukon.ca'),
+        'name' => env('MAIL_FROM_NAME', 'Yukon Government'),
+    ],
+    'reply_to' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'eServices@yukon.ca'),
+        'name' => env('MAIL_FROM_NAME', 'Yukon Government'),
     ],
 
     /*
