@@ -56,8 +56,7 @@ class DefaultController extends BaseController
         // Sending the email from this system is configurable.
         if(env('SEND_EMAIL_AT_START', True)){
           // gold plating: check if the user is already verified.
-          // Have Auth0 re-send the verification message.
-          //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+          // Re-send the verification message.
           $this->sendMessage($sessionToken);
           $sentTime = time();
         }
@@ -104,8 +103,7 @@ class DefaultController extends BaseController
     {
         $sessionToken = $request->session_token;
         // gold plating: check if the user is already verified.
-        // Have Auth0 re-send the verification message.
-        //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        // Re-send the verification message.
         $this->sendMessage($sessionToken);
 
         // Redirect to the default page to show a confirmation message.
@@ -177,38 +175,6 @@ class DefaultController extends BaseController
       $applicationName = "MyYukon";
 
       Mail::to($recipient)->send(new VerifyEmailAddress($ticketUrl, $applicationName));
-    }
-
-    /**
-     * Have Auth0 re-send the verification message.
-     *
-     * @param string $userID The ID of the user
-     * @param string $applicationID The ID of the application
-     * @return return array The result of the API call
-     */
-    private function auth0ResendMessage($userID, $applicationID)
-    {
-      $management = $this->getAuth0ManagementAPI();
-      // TODO check if user isn't already verified.
-
-      $response = $management->jobs()->createSendVerificationEmail(
-        $userID,
-        ['client_id' => $applicationID]
-      );
-
-      // Does the status code of the response indicate failure?
-      if ($response->getStatusCode() !== 201) {
-          Log::critical('API request failed', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
-          abort(500, "API request failed.");
-      }
-
-      // Decode the JSON response into a PHP array:
-      $response = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
-
-      // This response is the job to send the email.
-      // Email sending could still fail.
-      // Should we follow up o the job to monitor it's success?
-      return $response;
     }
 
     /**
