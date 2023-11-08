@@ -106,6 +106,7 @@ class JwtMiddleware
           // 'clientSecret' => env('AUTH0_CLIENT_SECRET'),
           // If you don't define audience, the SDK will use the client ID.
           // 'audience'     => ['https://validate-your-email.sign-on.service.yukon.ca/'],
+          'cookieSecret'  => env('AUTH0_SESSION_TOKEN_SECRET')
       ];
       // In case we're using a custom domain, tell Auth0 about it.
       if (env('AUTH0_CUSTOM_DOMAIN')) {
