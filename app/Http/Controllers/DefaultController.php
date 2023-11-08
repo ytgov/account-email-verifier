@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyEmailAddress;
+use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Mail;
 use Log;
 
 class DefaultController extends BaseController
@@ -52,7 +55,7 @@ class DefaultController extends BaseController
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
         //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
-        $this->sendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        $this->sendMessage($sessionToken);
 
         // Redirect to the default page to show a confirmation message.
         return redirect()->route('default',
@@ -101,7 +104,7 @@ class DefaultController extends BaseController
         // gold plating: check if the user is already verified.
         // Have Auth0 re-send the verification message.
         //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
-        $this->sendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+        $this->sendMessage($sessionToken);
 
         // Redirect to the default page to show a confirmation message.
         return redirect()->route('default',
@@ -133,12 +136,18 @@ class DefaultController extends BaseController
     /**
      * (Re)send the verification message, after getting a ticket from Auth0.
      *
-     * @param string $userID The ID of the user
-     * @param string $applicationID The ID of the application
+     * @param array $sessionToken Session token (JWT)
      * @return TBD
      */
-    private function sendMessage($userID, $applicationID)
+    private function sendMessage($sessionToken)
     {
+      $applicationID = $sessionToken['application_id'];
+      $userID = $sessionToken['user_id'];
+      $userEmail = $sessionToken['email'];
+      if($sessionToken['name']) {
+        $userName = $sessionToken['name'];
+      }
+      Log::debug('Application ID', ['application ID' => $applicationID]);
       $management = $this->getAuth0ManagementAPI();
 
       // TODO check if user isn't already verified.
@@ -159,7 +168,20 @@ class DefaultController extends BaseController
         Log::critical('Response missing ticket URL', ['code' => $response->getStatusCode(), 'response' => $response->getBody()]);
         abort(500, "API request failed.");
       }
-      Log::critical('ticket URL', ['response' => $response->getBody()]);
+      $ticketUrl = $ticket_response['ticket'];
+      Log::debug('ticket response', ['response' => $response->getBody()]);
+
+      // Send the email.
+      $recipient = [
+        [
+          'email' => $userEmail,
+          'name' => $userName,
+        ]
+      ];
+      // TODO use a real application name instead of just MyYukon
+      $applicationName = "MyYukon";
+
+      Mail::to($recipient)->send(new VerifyEmailAddress($ticketUrl, $applicationName));
     }
 
     /**
