@@ -34,6 +34,7 @@ class DefaultController extends BaseController
      */
     public function start(Request $request)
     {
+        $sentTime = NULL;
         $state = $request->input('state');
         if (empty($state)) {
           Log::info('State is missing');
@@ -52,14 +53,18 @@ class DefaultController extends BaseController
           return redirect()->route('missing_info');
         }
 
-        // gold plating: check if the user is already verified.
-        // Have Auth0 re-send the verification message.
-        //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
-        $this->sendMessage($sessionToken);
+        // Sending the email from this system is configurable.
+        if(env('SEND_EMAIL_AT_START', True)){
+          // gold plating: check if the user is already verified.
+          // Have Auth0 re-send the verification message.
+          //$this->auth0ResendMessage($sessionToken['user_id'], $sessionToken['application_id']);
+          $this->sendMessage($sessionToken);
+          $sentTime = time();
+        }
 
         // Redirect to the default page to show a confirmation message.
         return redirect()->route('default',
-          array_merge($request->all(), ['sent' => time()])
+          array_merge($request->all(), ['sent' => $sentTime])
         );
     }
 
