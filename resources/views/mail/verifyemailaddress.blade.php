@@ -41,7 +41,7 @@
 
               <p><a href="{{ $url }}">Verify my email</a></p>
 
-              <p>If you need help, use the <a href="https://service.yukon.ca/forms/en/help-yukon-government-online-services-account/">account support service</a>.</p>
+              <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=email">account support service</a>.</p>
 
               <strong>{{ $applicationName }}</strong>
 
