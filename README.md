@@ -1,6 +1,6 @@
 # account-email-verifier
 
-Email verification step during setup of Government of Yukon online services account.
+Email verification step during setup of a MyYukon account.
 
 Built using the Lumen PHP Framework and the [Auth0 PHP SDK](https://github.com/auth0/Auth0-PHP). Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
 

@@ -37,7 +37,7 @@
 
               <h1>Welcome to {{ $applicationName }}!</h1>
 
-              <p>Thanks for creating your Government of Yukon online services account. You need to verify your email address.</p>
+              <p>Thanks for creating your MyYukon account. You need to verify your email address.</p>
 
               <p><a href="{{ $url }}">Verify my email</a></p>
 
