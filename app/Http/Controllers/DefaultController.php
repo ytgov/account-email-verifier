@@ -79,11 +79,8 @@ class DefaultController extends BaseController
 
         $sessionToken = $request->session_token;
 
-        $continueUrl = $this->continueLink($state);
-
         return view('default', [
           'email' => $sessionToken['email'],
-          'continueUrl' => $continueUrl,
           'sessionToken' => $request->input('session_token'),
           'state' => $state,
           'resent' => $request->input('resent'),
@@ -125,13 +122,6 @@ class DefaultController extends BaseController
     {
       return view('missing_info');
     }
-
-    private function continueLink($state)
-    {
-      $idp_domain = env('AUTH0_DOMAIN', 'auth0.com');
-      return 'https://' . $idp_domain . '/continue?state=' . $state;
-    }
-
 
     /**
      * (Re)send the verification message, after getting a ticket from Auth0.

@@ -19,7 +19,7 @@
 
         <p>Choose the <em>Verify my email</em> button in that message. </p>
 
-        <p>After you verify, you can close this browser window, or you can <a href="{{ $continueUrl }}">continue logging in</a>.</p>
+        <p>After you verify, you can close this browser window.</p>
 
         <hr>
 
