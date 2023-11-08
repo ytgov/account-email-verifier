@@ -30,6 +30,7 @@ class VerifyEmailAddress extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.verifyemailaddress');
+        return $this->view('mail.verifyemailaddress')
+                    ->text('mail.verifyemailaddress_plain');
     }
 }
