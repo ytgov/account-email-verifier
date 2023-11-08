@@ -100,7 +100,7 @@
             <div class="d-flex flex-row-reverse col-6">
               <div class="site-desc-wrap navbar-right">
                 <p class="site-desc">
-                  © Copyright 2022 Government of Yukon
+                  © Copyright 2023 Government of Yukon
                 </p>
               </div>
             </div>
