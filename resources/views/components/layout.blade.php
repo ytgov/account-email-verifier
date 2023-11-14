@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-  <title>Verify your email address - Government of Yukon online services account</title>
+  <title>Verify your email address - MyYukon</title>
   <!-- <link rel="stylesheet" href="/libraries/yukon-ca-design-system/yukon-design-system-template/static/css/main.css"> -->
   <link rel="stylesheet" href="/libraries/yukon-ca-design-system/yukon-design-system-template/static/css/main.max.css">
   <link type="image/x-icon" rel="icon" href="/libraries/yukon-ca-design-system/yukon-design-system-template/favicon.ico">
@@ -100,7 +100,7 @@
             <div class="d-flex flex-row-reverse col-6">
               <div class="site-desc-wrap navbar-right">
                 <p class="site-desc">
-                  © Copyright 2022 Government of Yukon
+                  © Copyright 2023 Government of Yukon
                 </p>
               </div>
             </div>

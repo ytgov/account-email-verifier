@@ -8,7 +8,7 @@
         <h2>About this site</h2>
         
         <p>This site helps people validate their email address. It's part of the
-          Yukon government online services account system.</p>
+          MyYukon system.</p>
 
         <h2>Can I use it?</h2>
         

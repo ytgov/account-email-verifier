@@ -58,7 +58,9 @@ class JwtMiddleware
       
       // Capture expired tokens seperate of other validation errors.
       try {
-        $parser = new Parser($rawJWT, $auth0->configuration());
+        // The argument order here changed at in 8.3.8 (commit b30bdcb7f10).
+        $parser = new Parser($auth0->configuration(), $rawJWT);
+
         $validator = $parser->validate();
 
         $validator->expiration(60, time());
@@ -66,7 +68,7 @@ class JwtMiddleware
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // if token has  expired, User should go back to Auth0?
         // TODO show an error message here with instructions to the user.
-        Log::notice('Token failed expiration', ['exception' => $exception->getMessage()]);
+        Log::error('Token failed expiration', ['exception' => $exception->getMessage()]);
         abort(400, 'Session expired.');
       }
 
@@ -104,6 +106,7 @@ class JwtMiddleware
           // 'clientSecret' => env('AUTH0_CLIENT_SECRET'),
           // If you don't define audience, the SDK will use the client ID.
           // 'audience'     => ['https://validate-your-email.sign-on.service.yukon.ca/'],
+          'cookieSecret'  => env('AUTH0_SESSION_TOKEN_SECRET')
       ];
       // In case we're using a custom domain, tell Auth0 about it.
       if (env('AUTH0_CUSTOM_DOMAIN')) {

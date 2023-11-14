@@ -49,6 +49,11 @@ function enforceEmailVerification(event, api) {
     if (event.transaction && event.transaction.protocol === 'oauth2-refresh-token') {
       return;
     }
+    // Only apply to client (applications) that require email verification.
+    // TODO finish this
+    if (event.client.metadata['enforce_email_verification'] != '1') {
+      return;
+    }
 
     // Redirect to the account-email-verifier application.
     // Craft a signed session token
@@ -68,7 +73,7 @@ function enforceEmailVerification(event, api) {
     // Send the user to https://my-app.exampleco.com along
     // with a `session_token` query string param including
     // the email, user ID and application ID.
-    api.redirect.sendUserTo("http://localhost:8000/", {
+    api.redirect.sendUserTo("http://localhost:8000/start", {
       query: { session_token: token }
     });
 }
