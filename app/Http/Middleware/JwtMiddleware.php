@@ -82,7 +82,17 @@ class JwtMiddleware
         // If you get:
         // > Audience (aud) claim must be a string or array of strings present in the token
         // Make sure the redirect token has an `aud` value.
-        $token->validate(env('AUTH0_CUSTOM_DOMAIN', env('AUTH0_DOMAIN')));
+        // If we've configured a custom domain, try validating both as issuers.
+        if(!empty(env('AUTH0_CUSTOM_DOMAIN'))) {
+            try {
+                $token->validate(env('AUTH0_CUSTOM_DOMAIN'));
+            } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
+                // Try again with the non-custom domain name.
+                $token->validate(env('AUTH0_DOMAIN'));
+            }
+        } else {
+            $token->validate(env('AUTH0_DOMAIN'));
+        }
         // TODO is there a way to capture expired tokens specifically?
       } catch (\Auth0\SDK\Exception\InvalidTokenException $exception) {
         // The token wasn't valid. Let's display the error message from the Auth0 SDK.
