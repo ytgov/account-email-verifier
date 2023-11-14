@@ -137,8 +137,10 @@ class DefaultController extends BaseController
       $applicationID = $sessionToken['application_id'];
       $userID = $sessionToken['user_id'];
       $userEmail = $sessionToken['email'];
-      if($sessionToken['name']) {
+      if(!empty($sessionToken['name'])) {
         $userName = $sessionToken['name'];
+      } else {
+        $userName = Null;
       }
       Log::debug('Application ID', ['application ID' => $applicationID]);
       $management = $this->getAuth0ManagementAPI();
