@@ -73,7 +73,9 @@ function enforceEmailVerification(event, api) {
     // Send the user to https://my-app.exampleco.com along
     // with a `session_token` query string param including
     // the email, user ID and application ID.
-    api.redirect.sendUserTo("http://localhost:8000/start", {
+    // Send new users to /start (new message sent), send others to /
+    const path = event.stats.logins_count === 1 ? "/start" : "/"
+    api.redirect.sendUserTo("http://localhost:8000" + path, {
       query: { session_token: token }
     });
 }
