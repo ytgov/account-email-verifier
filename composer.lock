@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "auth0/auth0-php",
-            "version": "8.9.0",
+            "version": "8.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auth0/auth0-PHP.git",
-                "reference": "a8efbb81d0f93a0aaa3ff212ce34955e33c7941d"
+                "reference": "c0720c2abb8af15449e7cca4b89a302369553c11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/a8efbb81d0f93a0aaa3ff212ce34955e33c7941d",
-                "reference": "a8efbb81d0f93a0aaa3ff212ce34955e33c7941d",
+                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/c0720c2abb8af15449e7cca4b89a302369553c11",
+                "reference": "c0720c2abb8af15449e7cca4b89a302369553c11",
                 "shasum": ""
             },
             "require": {
@@ -101,9 +101,9 @@
             ],
             "support": {
                 "issues": "https://github.com/auth0/auth0-PHP/issues",
-                "source": "https://github.com/auth0/auth0-PHP/tree/8.9.0"
+                "source": "https://github.com/auth0/auth0-PHP/tree/8.9.3"
             },
-            "time": "2023-11-14T01:31:10+00:00"
+            "time": "2023-11-30T15:18:01+00:00"
         },
         {
             "name": "brick/math",
@@ -3762,16 +3762,16 @@
         },
         {
             "name": "php-http/discovery",
-            "version": "1.19.1",
+            "version": "1.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/discovery.git",
-                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e"
+                "reference": "61e1a1eb69c92741f5896d9e05fb8e9d7e8bb0cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/discovery/zipball/57f3de01d32085fea20865f9b16fb0e69347c39e",
-                "reference": "57f3de01d32085fea20865f9b16fb0e69347c39e",
+                "url": "https://api.github.com/repos/php-http/discovery/zipball/61e1a1eb69c92741f5896d9e05fb8e9d7e8bb0cb",
+                "reference": "61e1a1eb69c92741f5896d9e05fb8e9d7e8bb0cb",
                 "shasum": ""
             },
             "require": {
@@ -3834,9 +3834,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/discovery/issues",
-                "source": "https://github.com/php-http/discovery/tree/1.19.1"
+                "source": "https://github.com/php-http/discovery/tree/1.19.2"
             },
-            "time": "2023-07-11T07:02:26+00:00"
+            "time": "2023-11-30T16:49:05+00:00"
         },
         {
             "name": "php-http/multipart-stream-builder",
