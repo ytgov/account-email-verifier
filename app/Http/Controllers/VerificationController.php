@@ -41,10 +41,21 @@ class VerificationController extends BaseController
         ]
       ];
 
-      Mail::to($recipient)
-        ->send(new VerificationReceipt());
-      // Do we know if the send worked?
-      // TODO catch exceptions here.
+      try {
+          Mail::to($recipient)
+            ->send(new VerificationReceipt());
+          // Do we know if the send worked?
+      } catch (\Exception $ex) {
+          Log::error('Email send failed');
+          return response()->json([
+            "timestamp" => date('c'),
+            "status" => 500,
+            "error" => "Internal Server Error",
+            "message" => "Email send failed",
+            "detail" => $ex->getMessage(),
+            "path" => "/verification/submitted"]
+         , 500);
+      }
 
       return response([
             "timestamp" => date('c'),
