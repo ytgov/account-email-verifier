@@ -28,6 +28,7 @@ class VerificationReceipt extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mail.verificationreceipt')
+                    ->text('mail.verificationreceipt_plain');
     }
 }
