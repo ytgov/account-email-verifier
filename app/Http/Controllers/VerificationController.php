@@ -2,62 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerificationReceipt;
+use App\Http\Controllers;
 use Illuminate\Http\Request;
+use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Mail;
+use Log;
 
-class VerificationController extends Controller
+class VerificationController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Send a receipt email.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $userEmail
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function submitted(Request $request)
     {
-        //
-    }
+      // TODO protect this endpoint.
+      // TODO add logging.
+      $userEmail = $request->input('email');
+      if (empty($userEmail)) {
+          Log::info('email is missing');
+          abort(400, "Required value missing: email");
+      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+      $recipient = [
+        [
+          'email' => $userEmail,
+          'name' => NULL,
+        ]
+      ];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+      Mail::to($recipient)
+        ->send(new VerificationReceipt());
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+      // TODO return 200 here to let the caller know we're done.
     }
 }

@@ -28,7 +28,11 @@ class VerificationReceipt extends Mailable
      */
     public function build()
     {
+        $subject = "MyYukon verification application received";
+
         return $this->view('mail.verificationreceipt')
-                    ->text('mail.verificationreceipt_plain');
+                    ->text('mail.verificationreceipt_plain')
+                    ->subject($subject);
+
     }
 }

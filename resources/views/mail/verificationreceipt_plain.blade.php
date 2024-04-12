@@ -7,7 +7,7 @@ You cannot continue until the review is complete.
 
 If you need help, use the account support service.
 
-{{ env('SUPPORT_URL') }}&page=email
+{{ env('SUPPORT_URL') }}&page=receipt
 
 
 ---

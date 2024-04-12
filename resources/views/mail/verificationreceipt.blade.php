@@ -46,7 +46,7 @@
 
               <p>You cannot continue until the review is complete.</p>
 
-              <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=email">account support service</a>.</p>
+              <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=receipt">account support service</a>.</p>
 
               <br /><br />
               <hr style="border: 2px solid #EAEEF3; border-bottom: 0; margin: 20px 0;" />

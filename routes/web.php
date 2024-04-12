@@ -31,3 +31,6 @@ $router->get('/about', [
   'as'         => 'missing_info',  
   'uses'       => 'DefaultController@missing_info',
 ]);
+$router->get('/verification/submitted', [
+  'uses'       => 'VerificationController@submitted',
+]);
