@@ -25,7 +25,13 @@ class VerificationController extends BaseController
       $userEmail = $request->input('email');
       if (empty($userEmail)) {
           Log::info('email is missing');
-          abort(400, "Required value missing: email");
+          return response()->json([
+            "timestamp" => date('c'),
+            "status" => 400,
+            "error" => "Bad request",
+            "message" => "Required value missing: email",
+            "path" => "/verification/submitted"]
+         , 400);
       }
 
       $recipient = [
@@ -37,7 +43,13 @@ class VerificationController extends BaseController
 
       Mail::to($recipient)
         ->send(new VerificationReceipt());
+      // Do we know if the send worked?
+      // TODO catch exceptions here.
 
-      // TODO return 200 here to let the caller know we're done.
+      return response([
+            "timestamp" => date('c'),
+            "status" => 200,
+            "message" => "Receipt processed"], 200);
+
     }
 }
