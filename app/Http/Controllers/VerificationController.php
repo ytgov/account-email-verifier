@@ -15,7 +15,6 @@ class VerificationController extends BaseController
      * Send a receipt email.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $userEmail
      * @return \Illuminate\Http\Response
      */
     public function submitted(Request $request)
