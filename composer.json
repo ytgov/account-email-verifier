@@ -22,7 +22,7 @@
       }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "auth0/auth0-php": "^8.0",
         "guzzlehttp/guzzle": "^7.4",
         "illuminate/mail": "^10.0",
