@@ -8,7 +8,6 @@
     <center>
       <table
         style='width: 600px;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 0;font-family: "ProximaNova", sans-serif;border-collapse: collapse !important;height: 100% !important;'
-        align="center"
         border="0"
         cellpadding="0"
         cellspacing="0"
@@ -18,20 +17,19 @@
       >
         <tr>
           <td
-            align="center"
             valign="top"
             id="bodyCell"
             style='-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;mso-table-lspace: 0pt;mso-table-rspace: 0pt;margin: 0;padding: 20px;font-family: "ProximaNova", sans-serif;height: 100% !important;'
           >
             <div class="main">
               <p
-                style="text-align: center;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%; margin-bottom: 30px;"
+                style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%; padding-bottom: 1.5rem;margin-bottom: 30px; border-bottom: 4px solid #ffcd57;"
               >
                 <img
-                  src="https://service.yukon.ca/forms/libraries/yukon-design-system/yukon-design-system-template/images/logo.png"
+                  src="https://my.yukon.ca/assets/myyukon-logo-wordmark.png"
                   width="156"
-                  alt="Government of Yukon"
-                  style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;"
+                  alt="MyYukon, from Government of Yukon"
+                  style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none; width: 156px"
                 />
               </p>
 
@@ -43,11 +41,9 @@
 
               <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=email">account support service</a>.</p>
 
-              <strong>{{ $applicationName }}</strong>
-
               <br /><br />
               <hr style="border: 2px solid #EAEEF3; border-bottom: 0; margin: 20px 0;" />
-              <p style="text-align: center;color: #000;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">
+              <p style="color: #000;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">
                 If you did not make this request, contact us by replying to this message.
               </p>
             </div>
