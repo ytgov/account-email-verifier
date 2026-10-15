@@ -3,6 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Log;
 use Auth0\SDK\Token\Parser;
 
@@ -18,7 +20,7 @@ class JwtMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         if (empty($request->input('session_token'))) {
           Log::info('Session token is missing');
@@ -55,7 +57,7 @@ class JwtMiddleware
         Log::error('Token failed to verify', ['exception' => $exception->getMessage()]);
         abort(400, 'Invalid token.');
       }
-      
+
       // Capture expired tokens seperate of other validation errors.
       try {
         // The argument order here changed at in 8.3.8 (commit b30bdcb7f10).
@@ -101,7 +103,7 @@ class JwtMiddleware
         Log::error('Token invalid', ['exception' => $exception->getMessage()]);
         abort(400, 'Invalid token.');
       }
-      
+
       return $token;
     }
 
