@@ -26,9 +26,9 @@
                 style="-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%; padding-bottom: 1.5rem;margin-bottom: 30px; border-bottom: 4px solid #ffcd57;"
               >
                 <img
-                  src="https://my.yukon.ca/assets/myyukon-logo-wordmark.png"
+                  src="https://service.yukon.ca/forms/libraries/yukon-design-system/yukon-design-system-template/images/logo.png"
                   width="156"
-                  alt="MyYukon, from Government of Yukon"
+                  alt="Government of Yukon"
                   style="-ms-interpolation-mode: bicubic;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none; width: 156px"
                 />
               </p>
