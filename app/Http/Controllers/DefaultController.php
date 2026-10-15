@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\VerifyEmailAddress;
 use App\Http\Controllers;
 use Illuminate\Http\Request;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Mail;
 use Log;
 
