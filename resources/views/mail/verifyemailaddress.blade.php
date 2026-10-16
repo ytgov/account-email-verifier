@@ -42,7 +42,7 @@
               <br />
               <hr style="border: 2px solid #EAEEF3; border-bottom: 0; margin: 20px 0;" />
 
-              <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=email">account support service</a>.</p>
+              <p>If you need help, use the <a href="{{ env('SUPPORT_URL') }}&page=email">MyYukon support service</a>.</p>
               <p><a href="{{ env('TERMS_URL') }}">Terms of Service</a> apply.</p>
               <p style="color: #000;-webkit-text-size-adjust: 100%;-ms-text-size-adjust: 100%;">
                 If you did not make this request, contact us by replying to this message.

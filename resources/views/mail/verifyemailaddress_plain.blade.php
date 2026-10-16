@@ -9,7 +9,7 @@ Verify my email
 
 ---
 
-If you need help, use the account support service.
+If you need help, use the MyYukon support service.
   {{ env('SUPPORT_URL') }}&page=email
 
 Terms of Service apply.
