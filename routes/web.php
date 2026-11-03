@@ -1,33 +1,12 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DefaultController;
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
+Route::middleware(['jwt'])->group(function() {
+    Route::get('/start',[DefaultController::class, 'start'] );
+    Route::get('/',     [DefaultController::class, 'show']  )->name('default');
+    Route::post('/',    [DefaultController::class, 'resend']);
+});
 
-$router->get('/start', [
-  'as'         => 'default',
-  'uses'       => 'DefaultController@start',
-  'middleware' => ['jwt']
-]);
-$router->get('/', [
-  'as'         => 'default',
-  'uses'       => 'DefaultController@show',
-  'middleware' => ['jwt']
-]);
-$router->post('/', [
-  'uses'       => 'DefaultController@resend',
-  'middleware' => ['jwt']
-]);
-$router->get('/about', [
-  'as'         => 'missing_info',  
-  'uses'       => 'DefaultController@missing_info',
-]);
+Route::get('/about',[DefaultController::class, 'missing_info'] )->name('missing_info');

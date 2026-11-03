@@ -27,10 +27,10 @@
           <div class="site-nav-toggle col-6">
             <div class="row">
               <div class="pull-right">
-                <!-- 
+                <!--
                 <section id="wb-lng" class="header-lang-toggle">
                   <ul class="text-right">
-                    <li id="wet-fullhd-lang"><a href="/fr" class="link" hreflang="fr" lang="fr">Français</a></li> 
+                    <li id="wet-fullhd-lang"><a href="/fr" class="link" hreflang="fr" lang="fr">Français</a></li>
                   </ul>
                 </section>
               -->
@@ -100,7 +100,7 @@
             <div class="d-flex flex-row-reverse col-6">
               <div class="site-desc-wrap navbar-right">
                 <p class="site-desc">
-                  © Copyright 2023 Government of Yukon
+                  © Copyright 2026 Government of Yukon
                 </p>
               </div>
             </div>

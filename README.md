@@ -2,7 +2,7 @@
 
 Email verification step during setup of a MyYukon account.
 
-Built using the Lumen PHP Framework and the [Auth0 PHP SDK](https://github.com/auth0/Auth0-PHP). Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+Built using the Laravel PHP Framework and the [Auth0 PHP SDK](https://github.com/auth0/Auth0-PHP). Documentation for the framework can be found on the [Laravel website](https://laravel.com/docs).
 
 ## High level overview
 
@@ -58,8 +58,6 @@ The `client_id` here is the Account email verifier application client ID, not th
 
 ## Requirements
 
-- PHP 8
+- PHP 8.4
 - Composer
-- [Lumen requirements](https://lumen.laravel.com/docs/8.x/installation#server-requirements)
-  - OpenSSL PHP Extension
-  - Mbstring PHP Extension
+- [Laravel requirements](https://laravel.com/framework/docs/13.x/deployment#server-requirements)

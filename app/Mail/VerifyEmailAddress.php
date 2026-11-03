@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class VerifyEmailAddress extends Mailable
@@ -21,6 +22,16 @@ class VerifyEmailAddress extends Mailable
         public String $applicationName,)
     {
         //
+    }
+
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            subject: 'MyYukon - Verify your email address',
+        );
     }
 
     /**
